@@ -1,0 +1,11 @@
+.app {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.table-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
