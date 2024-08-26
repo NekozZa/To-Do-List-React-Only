@@ -22,8 +22,9 @@ function Field(props) {
   }, [props.fieldName]);
 
   return (
-    <div>
+    <div className="field">
       <h1 className="field-name">{props.fieldName}</h1>
+      <hr />
       <ul className="task-list">
         {tasks.map((task, index) => (
           <Task key={index} taskName={task} />
