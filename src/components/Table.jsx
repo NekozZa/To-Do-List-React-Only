@@ -5,6 +5,39 @@ import "../styles/field_layout.css";
 
 function Table(props) {
   const [fields, setFields] = useState([]);
+  const [newField, setNewField] = useState("");
+  const [mouseOver, setMouseOver] = useState(false);
+
+  function handleMouseOver() {
+    setMouseOver(true);
+  }
+
+  function handleMouseOut() {
+    setMouseOver(false);
+  }
+
+  function handleClick() {
+    setFields(fields.concat(newField));
+
+    axios.post(
+      "http://localhost:5000/api/table/add-field",
+      {
+        tableName: props.tableName,
+        fieldName: newField,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    setNewField("");
+  }
+
+  function updateFieldValue(event) {
+    setNewField(event.target.value);
+  }
 
   useEffect(() => {
     const getFields = async () => {
@@ -25,9 +58,35 @@ function Table(props) {
     <div className="fields">
       {fields.slice(1, fields.length).map((field, index) => {
         return (
-          <Field key={index} fieldName={field} tableName={props.tableName} />
+          <Field
+            key={index}
+            id={index}
+            fieldName={field}
+            tableName={props.tableName}
+          />
         );
       })}
+      <div
+        className="field add-field-btn"
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      >
+        {mouseOver ? (
+          <input
+            type="text"
+            value={newField}
+            onChange={updateFieldValue}
+          ></input>
+        ) : (
+          <i className="ri-add-large-line"></i>
+        )}
+
+        {mouseOver && (
+          <button onClick={handleClick}>
+            <i class="ri-check-line"></i>
+          </button>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-li {
+.task {
     border: 1px solid transparent;
     padding: 0.3rem;
 
@@ -7,8 +7,53 @@ li {
     gap: 5px;
 }
 
-li:hover {
+.task:hover {
     cursor: pointer;
     border: 1px solid black; 
     border-radius: 0.2rem;
 }
+
+.add-task-btn {
+    position: absolute;
+    bottom: -30px;
+}
+
+.add-task-btn {
+    font-size: 1.3rem;
+}
+
+.add-task-btn:hover{
+    cursor: pointer;
+}
+
+
+li input {
+    width: 100%;
+
+    border: 0;
+    border-bottom: 1px dotted black;
+
+    font-size: 1rem;
+}
+
+li input:focus {
+    outline: none;
+}
+
+li button {
+    background: transparent;
+    border: none;
+
+    width: 100%;
+
+    text-align: right;
+    font-size: 1rem;
+
+    padding: 0;
+}
+
+li button:hover {
+    cursor: pointer;
+}
+
+

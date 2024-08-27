@@ -1,9 +1,9 @@
 .app {
     display: flex;
-    gap: 10rem;
+    gap: 3rem;
 
-
-    width: 100%;
+    width: 100%;   
+    padding: 1rem 0;
 }
 
 .table-list {
@@ -11,23 +11,45 @@
     flex-direction: column;
     gap: 1rem;
 
-    width: 10%;
-
+    width: 7%;
+    height: fit-content;
     margin-left: 1rem;
+    border-right: 1px solid black;
+    padding-right: 1rem;
+    padding-bottom: 4rem;
+
+    text-align: right;
+    font-size: 1.5rem;
 }
 
 .table-list button {
     background: transparent;
     border: none;
-
     text-align: left;
+    color: black;
 }
 
 .table-list button:hover {
     cursor: pointer;
-    font-weight: 700;
+    text-decoration: underline;
 }
 
-.table {
+.table-list input {
+    width: 100%;
 
+    border: 0;
+    border-bottom: 1px dotted black;
+
+    transition: width 0.2s ease-in;
 }
+
+
+.table-list input:focus {
+    outline: none;
+}
+
+.table-list i {
+    cursor: pointer;
+}
+
+
