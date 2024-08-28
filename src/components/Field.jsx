@@ -18,7 +18,7 @@ function Field(props) {
     setNewTask(event.target.value);
   }
 
-  function addNewTask() {
+  function addTask() {
     setTasks(tasks.concat(newTask));
 
     axios.post(
@@ -38,6 +38,17 @@ function Field(props) {
     setNewTask("");
   }
 
+  function deleteTask(id) {
+    setTasks(tasks.filter((task, index) => index != id));
+
+    axios.delete("http://localhost:5000/api/table/field/delete-task", {
+      data: {
+        tableName: props.tableName,
+        taskID: id,
+      },
+    });
+  }
+
   useEffect(() => {
     const getTasks = async () => {
       try {
@@ -55,12 +66,19 @@ function Field(props) {
 
   return (
     <div className={`field field-${props.id}`}>
+      <i
+        class="ri-close-line close-icon"
+        onClick={() => {
+          props.onDelete(props.id);
+        }}
+      ></i>
+
       <h1 className="field-name">{props.fieldName}</h1>
       <hr />
 
       <ul className="task-list">
         {tasks.map((task, index) => (
-          <Task key={index} taskName={task} />
+          <Task key={index} id={index} taskName={task} onDelete={deleteTask} />
         ))}
 
         <li>
@@ -71,7 +89,7 @@ function Field(props) {
             value={newTask}
             hidden
           />
-          <button onClick={addNewTask} hidden>
+          <button onClick={addTask} hidden>
             <i class="ri-edit-2-line"></i>
           </button>
         </li>

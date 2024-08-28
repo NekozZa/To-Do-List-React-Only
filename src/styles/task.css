@@ -3,14 +3,33 @@
     padding: 0.3rem;
 
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 5px;
+
+
 }
 
 .task:hover {
-    cursor: pointer;
-    border: 1px solid black; 
+    border-bottom: 1px solid black;
+}
+
+.task:active {
+    border: 1px solid black;
     border-radius: 0.2rem;
+}
+
+.task div {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.task i {
+    color: black;
+}
+
+.task i:hover {
+    cursor: pointer;
 }
 
 .add-task-btn {

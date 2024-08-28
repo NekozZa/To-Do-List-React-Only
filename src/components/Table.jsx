@@ -16,7 +16,7 @@ function Table(props) {
     setMouseOver(false);
   }
 
-  function handleClick() {
+  function addField() {
     setFields(fields.concat(newField));
 
     axios.post(
@@ -37,6 +37,17 @@ function Table(props) {
 
   function updateFieldValue(event) {
     setNewField(event.target.value);
+  }
+
+  function deleteField(id) {
+    setFields(fields.filter((field, index) => index - 1 != id));
+
+    axios.delete("http://localhost:5000/api/table/delete-field", {
+      data: {
+        tableName: props.tableName,
+        fieldName: fields[id + 1],
+      },
+    });
   }
 
   useEffect(() => {
@@ -63,6 +74,7 @@ function Table(props) {
             id={index}
             fieldName={field}
             tableName={props.tableName}
+            onDelete={deleteField}
           />
         );
       })}
@@ -82,7 +94,7 @@ function Table(props) {
         )}
 
         {mouseOver && (
-          <button onClick={handleClick}>
+          <button onClick={addField}>
             <i class="ri-check-line"></i>
           </button>
         )}
