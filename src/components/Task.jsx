@@ -3,25 +3,24 @@ import React, { useState } from "react";
 import "../styles/task.css";
 
 function Task(props) {
-  const [mouseOn, setMouseOn] = useState(false);
-
   return (
     <li
       className={`task task-${props.id}`}
       draggable
       onDragStart={() => {
         props.setActiveTask(`.field-${props.fieldID} .task-${props.id}`);
+        props.setSrcField([props.tasks, props.setTasks]);
       }}
       onDragEnd={() => {
         props.setActiveTask(null);
       }}
     >
-      {props.taskName}
+      <p>{props.taskName}</p>
 
       <i
         class="ri-delete-bin-line"
         onClick={() => {
-          props.onDelete(props.id);
+          props.onDelete(props.id, props.taskName);
         }}
       ></i>
     </li>

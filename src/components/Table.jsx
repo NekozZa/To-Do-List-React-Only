@@ -7,6 +7,18 @@ import "../styles/field_layout.css";
 function Table(props) {
   const [fields, setFields] = useState([]);
   const [activeTask, setActiveTask] = useState(null);
+  const [srcField, setSrcField] = useState([]);
+
+  function onDrop(fieldID, taskID, tasks, setTasks) {
+    const draggedTask = document.querySelector(`${activeTask} p`).innerHTML;
+
+    const [srcFieldTasks, setSrcFieldTasks] = srcField;
+    srcFieldTasks.splice(srcFieldTasks.indexOf(draggedTask), 1);
+    setSrcFieldTasks(srcFieldTasks);
+
+    tasks.splice(taskID, 0, draggedTask);
+    setTasks(tasks);
+  }
 
   function addField(newField, setNewField) {
     setFields(fields.concat(newField));
@@ -64,6 +76,8 @@ function Table(props) {
             tableName={props.tableName}
             onDelete={deleteField}
             setActiveTask={setActiveTask}
+            setSrcField={setSrcField}
+            onDrop={onDrop}
           />
         );
       })}

@@ -1,0 +1,20 @@
+.drop-area {
+    margin: 0.3rem 0;
+    padding: 0.3rem;
+    border: 1px dashed black;
+    border-radius: 0.2rem;
+
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+.hide-drop {
+    opacity: 0;
+    cursor: default;
+}
+
+
+
+
+
+

@@ -1,16 +1,15 @@
 .task {
-    border: 1px solid transparent;
+    /* border: 1px solid transparent; */
     padding: 0.3rem;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 5px;
-
-
 }
 
 .task:hover {
+    cursor: grab;
     border-bottom: 1px solid black;
 }
 
@@ -22,6 +21,12 @@
 .task div {
     display: flex;
     gap: 0.5rem;
+}
+
+.task p {
+    margin: 0;
+    border: 0;
+    padding: 0;
 }
 
 .task i {

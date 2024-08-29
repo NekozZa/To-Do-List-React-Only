@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Task from "./Task";
 import AddTask from "./AddTask";
+import DropArea from "./DropArea";
 import axios from "axios";
 import "../styles/field.css";
 
@@ -34,13 +35,14 @@ function Field(props) {
     setNewTask("");
   }
 
-  function deleteTask(id) {
-    setTasks(tasks.filter((task, index) => index != id));
+  function deleteTask(id, taskName) {
+    setTasks(tasks.filter((task, index) => index !== id));
 
     axios.delete("http://localhost:5000/api/table/field/delete-task", {
       data: {
         tableName: props.tableName,
-        taskID: id,
+        fieldName: props.fieldName,
+        taskName: taskName,
       },
     });
   }
@@ -73,15 +75,36 @@ function Field(props) {
       <hr />
 
       <ul className="task-list">
+        <DropArea
+          onDrop={props.onDrop}
+          fieldID={props.id}
+          taskID={0}
+          tasks={tasks}
+          setTasks={setTasks}
+        />
+
         {tasks.map((task, index) => (
-          <Task
-            key={index}
-            id={index}
-            fieldID={props.id}
-            taskName={task}
-            onDelete={deleteTask}
-            setActiveTask={props.setActiveTask}
-          />
+          <>
+            <Task
+              key={index}
+              id={index}
+              fieldID={props.id}
+              taskName={task}
+              tasks={tasks}
+              onDelete={deleteTask}
+              setActiveTask={props.setActiveTask}
+              setSrcField={props.setSrcField}
+              setTasks={setTasks}
+            />
+
+            <DropArea
+              onDrop={props.onDrop}
+              fieldID={props.id}
+              taskID={index + 1}
+              tasks={tasks}
+              setTasks={setTasks}
+            />
+          </>
         ))}
 
         <AddTask addTask={addTask} />
