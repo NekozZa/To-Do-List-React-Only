@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+
 import "../styles/task.css";
 
 function Task(props) {
+  const [mouseOn, setMouseOn] = useState(false);
+
   return (
-    <li className="task">
+    <li
+      className={`task task-${props.id}`}
+      draggable
+      onDragStart={() => {
+        props.setActiveTask(`.field-${props.fieldID} .task-${props.id}`);
+      }}
+      onDragEnd={() => {
+        props.setActiveTask(null);
+      }}
+    >
       {props.taskName}
 
       <i

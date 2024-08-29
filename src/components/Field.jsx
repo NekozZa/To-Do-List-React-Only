@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Task from "./Task";
+import AddTask from "./AddTask";
 import axios from "axios";
 import "../styles/field.css";
 
 function Field(props) {
   const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState("");
 
   function handleClick(id) {
     const inp = document.querySelector(`.field-${id} input`);
@@ -14,11 +14,7 @@ function Field(props) {
     btn.toggleAttribute("hidden");
   }
 
-  function handleChange(event) {
-    setNewTask(event.target.value);
-  }
-
-  function addTask() {
+  function addTask(newTask, setNewTask) {
     setTasks(tasks.concat(newTask));
 
     axios.post(
@@ -78,21 +74,17 @@ function Field(props) {
 
       <ul className="task-list">
         {tasks.map((task, index) => (
-          <Task key={index} id={index} taskName={task} onDelete={deleteTask} />
+          <Task
+            key={index}
+            id={index}
+            fieldID={props.id}
+            taskName={task}
+            onDelete={deleteTask}
+            setActiveTask={props.setActiveTask}
+          />
         ))}
 
-        <li>
-          <input
-            type="text"
-            name="newTask"
-            onChange={handleChange}
-            value={newTask}
-            hidden
-          />
-          <button onClick={addTask} hidden>
-            <i class="ri-edit-2-line"></i>
-          </button>
-        </li>
+        <AddTask addTask={addTask} />
       </ul>
 
       <i

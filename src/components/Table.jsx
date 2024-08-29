@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, act } from "react";
 import Field from "./Field";
+import AddField from "./AddField";
 import axios from "axios";
 import "../styles/field_layout.css";
 
 function Table(props) {
   const [fields, setFields] = useState([]);
-  const [newField, setNewField] = useState("");
-  const [mouseOver, setMouseOver] = useState(false);
+  const [activeTask, setActiveTask] = useState(null);
 
-  function handleMouseOver() {
-    setMouseOver(true);
-  }
-
-  function handleMouseOut() {
-    setMouseOver(false);
-  }
-
-  function addField() {
+  function addField(newField, setNewField) {
     setFields(fields.concat(newField));
 
     axios.post(
@@ -33,10 +25,6 @@ function Table(props) {
     );
 
     setNewField("");
-  }
-
-  function updateFieldValue(event) {
-    setNewField(event.target.value);
   }
 
   function deleteField(id) {
@@ -75,30 +63,12 @@ function Table(props) {
             fieldName={field}
             tableName={props.tableName}
             onDelete={deleteField}
+            setActiveTask={setActiveTask}
           />
         );
       })}
-      <div
-        className="field add-field-btn"
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
-      >
-        {mouseOver ? (
-          <input
-            type="text"
-            value={newField}
-            onChange={updateFieldValue}
-          ></input>
-        ) : (
-          <i className="ri-add-large-line"></i>
-        )}
 
-        {mouseOver && (
-          <button onClick={addField}>
-            <i class="ri-check-line"></i>
-          </button>
-        )}
-      </div>
+      <AddField addField={addField} />
     </div>
   );
 }
