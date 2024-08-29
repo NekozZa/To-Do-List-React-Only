@@ -9,7 +9,7 @@ function Task(props) {
       draggable
       onDragStart={() => {
         props.setActiveTask(`.field-${props.fieldID} .task-${props.id}`);
-        props.setSrcField([props.tasks, props.setTasks]);
+        props.setSrcField([props.tasks, props.setTasks, props.fieldID]);
       }}
       onDragEnd={() => {
         props.setActiveTask(null);

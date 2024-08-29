@@ -9,15 +9,45 @@ function Table(props) {
   const [activeTask, setActiveTask] = useState(null);
   const [srcField, setSrcField] = useState([]);
 
-  function onDrop(fieldID, taskID, tasks, setTasks) {
+  function onDrop(
+    targetFieldID,
+    targetTaskID,
+    targetFieldTasks,
+    setTargetFieldTasks
+  ) {
     const draggedTask = document.querySelector(`${activeTask} p`).innerHTML;
+    const [srcFieldTasks, setSrcFieldTasks, srcFieldID] = srcField;
 
-    const [srcFieldTasks, setSrcFieldTasks] = srcField;
+    console.log(fields[targetFieldID + 1]);
+    console.log(fields[srcFieldID + 1]);
+
+    axios.post(
+      "http://localhost:5000/api/table/field/add-task",
+      {
+        tableName: props.tableName,
+        fieldName: fields[targetFieldID + 1],
+        taskName: draggedTask,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    axios.delete("http://localhost:5000/api/table/field/delete-task", {
+      data: {
+        tableName: props.tableName,
+        fieldName: fields[srcFieldID + 1],
+        taskName: draggedTask,
+      },
+    });
+
     srcFieldTasks.splice(srcFieldTasks.indexOf(draggedTask), 1);
     setSrcFieldTasks(srcFieldTasks);
 
-    tasks.splice(taskID, 0, draggedTask);
-    setTasks(tasks);
+    targetFieldTasks.splice(targetTaskID, 0, draggedTask);
+    setTargetFieldTasks(targetFieldTasks);
   }
 
   function addField(newField, setNewField) {
@@ -75,9 +105,9 @@ function Table(props) {
             fieldName={field}
             tableName={props.tableName}
             onDelete={deleteField}
+            onDrop={onDrop}
             setActiveTask={setActiveTask}
             setSrcField={setSrcField}
-            onDrop={onDrop}
           />
         );
       })}
